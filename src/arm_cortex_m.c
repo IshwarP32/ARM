@@ -63,7 +63,7 @@ rtos_result_t cortex_m_systick_config(uint32_t ticks)
                        SYSTICK_TICKINT |     /* Enable interrupt */
                        SYSTICK_CLKSOURCE;    /* Use processor clock */
     
-    DEBUG_PRINT("SysTick configured for %ld ticks\n", ticks);
+    DEBUG_PRINT("SysTick configured for %u ticks\n", ticks);
     
     return RTOS_SUCCESS;
 }
