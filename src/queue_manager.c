@@ -105,7 +105,7 @@ queue_result_t queue_create(uint8_t queue_id, uint32_t size)
     queue->send_waiting_count = 0;
     queue->receive_waiting_count = 0;
     
-    DEBUG_PRINT("Queue %d created with size %ld\n", queue_id, size);
+    DEBUG_PRINT("Queue %d created with size %u\n", queue_id, size);
     
     return QUEUE_SUCCESS;
 }
@@ -543,7 +543,7 @@ void queue_print_info(uint8_t queue_id)
         {
             if(queues[i].is_active)
             {
-                DEBUG_PRINT("Queue %d: Size=%ld, Count=%ld, Senders=%d, Receivers=%d\n",
+                DEBUG_PRINT("Queue %d: Size=%u, Count=%u, Senders=%d, Receivers=%d\n",
                            i, queues[i].size, queues[i].count,
                            queues[i].send_waiting_count, queues[i].receive_waiting_count);
             }
@@ -552,7 +552,7 @@ void queue_print_info(uint8_t queue_id)
     else if(queue_id < MAX_QUEUES && queues[queue_id].is_active)
     {
         queue_t* queue = &queues[queue_id];
-        DEBUG_PRINT("Queue %d: Size=%ld, Count=%ld, Head=%ld, Tail=%ld\n",
+        DEBUG_PRINT("Queue %d: Size=%u, Count=%u, Head=%u, Tail=%u\n",
                    queue_id, queue->size, queue->count, queue->head, queue->tail);
     }
 }

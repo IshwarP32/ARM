@@ -348,7 +348,7 @@ void task_print_info(uint8_t task_id)
         tcb_t* tcb = &task_table[task_id];
         if(tcb->state != TASK_STATE_DELETED)
         {
-            DEBUG_PRINT("Task %d: '%s' Priority:%d State:%d Switches:%ld\n",
+            DEBUG_PRINT("Task %d: '%s' Priority:%d State:%d Switches:%u\n",
                        tcb->task_id, tcb->task_name, tcb->priority, 
                        tcb->state, tcb->context_switches);
         }

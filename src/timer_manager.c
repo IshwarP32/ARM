@@ -207,7 +207,7 @@ uint8_t timer_create(timer_type_t type,
     timer->user_data = user_data;
     timer->is_active = true;
     
-    DEBUG_PRINT("Software timer %d created (%s, %ld ms)\n", 
+    DEBUG_PRINT("Software timer %d created (%s, %u ms)\n", 
                timer_id, 
                (type == TIMER_TYPE_ONE_SHOT) ? "One-shot" : "Periodic",
                period_ms);
@@ -357,7 +357,7 @@ rtos_result_t timer_change_period(uint8_t timer_id, uint32_t new_period_ms)
     
     EXIT_CRITICAL();
     
-    DEBUG_PRINT("Software timer %d period changed to %ld ms\n", timer_id, new_period_ms);
+    DEBUG_PRINT("Software timer %d period changed to %u ms\n", timer_id, new_period_ms);
     
     return RTOS_SUCCESS;
 }
@@ -522,13 +522,13 @@ void timer_print_info(void)
     }
     
     DEBUG_PRINT("=== Timer Information ===\n");
-    DEBUG_PRINT("System Ticks: %ld\n", stats.system_ticks);
-    DEBUG_PRINT("Uptime: %ld ms\n", timer_get_uptime_ms());
+    DEBUG_PRINT("System Ticks: %u\n", stats.system_ticks);
+    DEBUG_PRINT("Uptime: %u ms\n", timer_get_uptime_ms());
     DEBUG_PRINT("Timer Running: %s\n", timer_running ? "Yes" : "No");
-    DEBUG_PRINT("Timer Interrupts: %ld\n", stats.timer_interrupts);
-    DEBUG_PRINT("Missed Ticks: %ld\n", stats.missed_ticks);
-    DEBUG_PRINT("Max Interrupt Time: %ld\n", stats.max_interrupt_time);
-    DEBUG_PRINT("Software Timer Expirations: %ld\n", stats.software_timer_expirations);
+    DEBUG_PRINT("Timer Interrupts: %u\n", stats.timer_interrupts);
+    DEBUG_PRINT("Missed Ticks: %u\n", stats.missed_ticks);
+    DEBUG_PRINT("Max Interrupt Time: %u\n", stats.max_interrupt_time);
+    DEBUG_PRINT("Software Timer Expirations: %u\n", stats.software_timer_expirations);
 }
 
 /**
@@ -560,7 +560,7 @@ void timer_print_software_timers(void)
                 default: state_str = "Unknown"; break;
             }
             
-            DEBUG_PRINT("Timer %d: %s, %s, Period: %ld ms, Remaining: %ld ms\n",
+            DEBUG_PRINT("Timer %d: %s, %s, Period: %u ms, Remaining: %u ms\n",
                        i, type_str, state_str, timer->period_ms, timer->remaining_ms);
         }
     }

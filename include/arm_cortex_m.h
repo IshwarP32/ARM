@@ -43,6 +43,9 @@
  * INLINE ASSEMBLY FUNCTIONS
  * ============================================================================ */
 
+/* Only define these functions if they're not already provided by the compiler */
+#ifndef __ARMCC_VERSION
+
 /**
  * @brief Disable interrupts and return previous state
  * @return uint32_t Previous PRIMASK value
@@ -50,18 +53,8 @@
 static inline uint32_t __disable_irq(void)
 {
     uint32_t result;
-    
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MRS result, PRIMASK
-        CPSID I
-    }
-    #else
     __asm volatile ("MRS %0, PRIMASK" : "=r" (result) );
     __asm volatile ("CPSID I" : : : "memory");
-    #endif
-    
     return result;
 }
 
@@ -70,14 +63,7 @@ static inline uint32_t __disable_irq(void)
  */
 static inline void __enable_irq(void)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        CPSIE I
-    }
-    #else
     __asm volatile ("CPSIE I" : : : "memory");
-    #endif
 }
 
 /**
@@ -85,14 +71,7 @@ static inline void __enable_irq(void)
  */
 static inline void __WFI(void)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        WFI
-    }
-    #else
     __asm volatile ("WFI");
-    #endif
 }
 
 /**
@@ -100,14 +79,7 @@ static inline void __WFI(void)
  */
 static inline void __WFE(void)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        WFE
-    }
-    #else
     __asm volatile ("WFE");
-    #endif
 }
 
 /**
@@ -115,14 +87,7 @@ static inline void __WFE(void)
  */
 static inline void __SEV(void)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        SEV
-    }
-    #else
     __asm volatile ("SEV");
-    #endif
 }
 
 /**
@@ -130,15 +95,10 @@ static inline void __SEV(void)
  */
 static inline void __NOP(void)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        NOP
-    }
-    #else
     __asm volatile ("NOP");
-    #endif
 }
+
+#endif /* __ARMCC_VERSION */
 
 /* ============================================================================
  * FUNCTION PROTOTYPES

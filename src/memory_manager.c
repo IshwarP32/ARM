@@ -95,7 +95,7 @@ void* memory_alloc(uint32_t size)
     {
         EXIT_CRITICAL();
         stats.failed_allocations++;
-        DEBUG_PRINT("Memory allocation failed for %ld bytes\n", size);
+        DEBUG_PRINT("Memory allocation failed for %u bytes\n", size);
         return NULL;
     }
     
@@ -431,16 +431,16 @@ void memory_print_info(void)
     }
     
     DEBUG_PRINT("=== Memory Information ===\n");
-    DEBUG_PRINT("Total Heap: %ld bytes\n", stats.total_heap_size);
-    DEBUG_PRINT("Used: %ld bytes\n", stats.used_heap_size);
-    DEBUG_PRINT("Free: %ld bytes\n", stats.free_heap_size);
-    DEBUG_PRINT("Largest Free Block: %ld bytes\n", stats.largest_free_block);
-    DEBUG_PRINT("Free Blocks: %ld\n", stats.free_blocks_count);
-    DEBUG_PRINT("Allocations: %ld\n", stats.allocation_count);
-    DEBUG_PRINT("Frees: %ld\n", stats.free_count);
-    DEBUG_PRINT("Failed Allocations: %ld\n", stats.failed_allocations);
-    DEBUG_PRINT("Max Used: %ld bytes\n", stats.max_used_heap_size);
-    DEBUG_PRINT("Min Free: %ld bytes\n", stats.min_free_heap_size);
+    DEBUG_PRINT("Total Heap: %u bytes\n", stats.total_heap_size);
+    DEBUG_PRINT("Used: %u bytes\n", stats.used_heap_size);
+    DEBUG_PRINT("Free: %u bytes\n", stats.free_heap_size);
+    DEBUG_PRINT("Largest Free Block: %u bytes\n", stats.largest_free_block);
+    DEBUG_PRINT("Free Blocks: %u\n", stats.free_blocks_count);
+    DEBUG_PRINT("Allocations: %u\n", stats.allocation_count);
+    DEBUG_PRINT("Frees: %u\n", stats.free_count);
+    DEBUG_PRINT("Failed Allocations: %u\n", stats.failed_allocations);
+    DEBUG_PRINT("Max Used: %u bytes\n", stats.max_used_heap_size);
+    DEBUG_PRINT("Min Free: %u bytes\n", stats.min_free_heap_size);
 }
 
 /**

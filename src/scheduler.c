@@ -353,8 +353,8 @@ void scheduler_print_info(void)
     DEBUG_PRINT("=== Scheduler Information ===\n");
     DEBUG_PRINT("Running: %s\n", scheduler_running ? "Yes" : "No");
     DEBUG_PRINT("Locked: %s\n", scheduler_locked ? "Yes" : "No");
-    DEBUG_PRINT("Context Switches: %ld\n", stats.total_context_switches);
-    DEBUG_PRINT("Scheduler Calls: %ld\n", stats.total_scheduler_calls);
+    DEBUG_PRINT("Context Switches: %u\n", stats.total_context_switches);
+    DEBUG_PRINT("Scheduler Calls: %u\n", stats.total_scheduler_calls);
     
     /* Show ready queues */
     for(int i = SCHEDULER_PRIORITY_LEVELS - 1; i >= 0; i--)
