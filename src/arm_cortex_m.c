@@ -111,14 +111,7 @@ uint32_t cortex_m_get_sp(void)
 {
     uint32_t result;
     
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MOV result, SP
-    }
-    #else
-    __asm volatile ("MOV %0, SP" : "=r" (result) );
-    #endif
+    __asm volatile ("mov %0, sp" : "=r" (result));
     
     return result;
 }
@@ -128,14 +121,7 @@ uint32_t cortex_m_get_sp(void)
  */
 void cortex_m_set_sp(uint32_t sp)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MOV SP, sp
-    }
-    #else
-    __asm volatile ("MOV SP, %0" : : "r" (sp) : "sp");
-    #endif
+    __asm volatile ("mov sp, %0" : : "r" (sp));
 }
 
 /**
@@ -145,14 +131,7 @@ uint32_t cortex_m_get_psp(void)
 {
     uint32_t result;
     
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MRS result, PSP
-    }
-    #else
-    __asm volatile ("MRS %0, PSP" : "=r" (result) );
-    #endif
+    __asm volatile ("mrs %0, psp" : "=r" (result));
     
     return result;
 }
@@ -162,14 +141,7 @@ uint32_t cortex_m_get_psp(void)
  */
 void cortex_m_set_psp(uint32_t psp)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MSR PSP, psp
-    }
-    #else
-    __asm volatile ("MSR PSP, %0" : : "r" (psp));
-    #endif
+    __asm volatile ("msr psp, %0" : : "r" (psp));
 }
 
 /**
@@ -179,14 +151,7 @@ uint32_t cortex_m_get_msp(void)
 {
     uint32_t result;
     
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MRS result, MSP
-    }
-    #else
-    __asm volatile ("MRS %0, MSP" : "=r" (result) );
-    #endif
+    __asm volatile ("mrs %0, msp" : "=r" (result));
     
     return result;
 }
@@ -196,12 +161,5 @@ uint32_t cortex_m_get_msp(void)
  */
 void cortex_m_set_msp(uint32_t msp)
 {
-    #ifdef __ARMCC_VERSION
-    __asm
-    {
-        MSR MSP, msp
-    }
-    #else
-    __asm volatile ("MSR MSP, %0" : : "r" (msp));
-    #endif
+    __asm volatile ("msr msp, %0" : : "r" (msp));
 }

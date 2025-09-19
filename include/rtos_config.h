@@ -110,6 +110,10 @@ typedef enum {
 /* ============================================================================
  * DEBUG CONFIGURATION
  * ============================================================================ */
+#ifndef DEBUG
+#define DEBUG  1
+#endif
+
 #ifdef DEBUG
     #define DEBUG_PRINT(fmt, ...)   printf(fmt, ##__VA_ARGS__)
 #else
