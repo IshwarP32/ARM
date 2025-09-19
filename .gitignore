@@ -1,0 +1,50 @@
+# Keil uVision build outputs
+Objects/
+Listings/
+*.axf
+*.htm
+*.lnp
+*.map
+*.dep
+*.d
+*.crf
+*.o
+*.lst
+*.cod
+
+# Keil uVision project files (keep .uvprojx, exclude others)
+*.uvgui.*
+*.uvguix.*
+*.uvopt*
+*.bak
+*.orig
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Debug files
+*.elf
+*.hex
+*.bin
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build directories
+build/
+debug/
+release/
+
+# Documentation build outputs
+docs/html/
+docs/latex/
