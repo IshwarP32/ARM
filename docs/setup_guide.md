@@ -117,7 +117,28 @@ First task: Task1 (ID: 0)
 
 ### Common Issues and Solutions
 
-#### 1. "Device not found" Error
+#### 1. Build Error: "Cannot find argument 'Reset_Handler'"
+
+**Error Message:**
+```
+.\Objects\ARM_RTOS_Scheduler.axf: Error: L6320W: Ignoring --entry command. Cannot find argument 'Reset_Handler'.
+.\Objects\ARM_RTOS_Scheduler.axf: Warning: L6320W: Ignoring --first command. Cannot find argument '__Vectors'.
+```
+
+**Solution:**
+This error occurs when the ARM Cortex-M startup file is missing or not properly configured.
+
+✅ **Fixed in current version**: The project now includes:
+- `startup_ARMCM3.s` - ARM Cortex-M3 startup assembly file
+- `system_ARMCM3.c` - System initialization functions
+- Updated project configuration to include these files
+
+If you encounter this error:
+1. Ensure `startup_ARMCM3.s` and `system_ARMCM3.c` are in the project root
+2. Verify they are included in the project build (should be in "Startup" and "Source Files" groups)
+3. Check that the project target is set to ARM Cortex-M3
+
+#### 2. "Device not found" Error
 **Problem**: Keil cannot find the target device
 **Solution**: 
 - Check that ARMCM3 device is selected
