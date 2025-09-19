@@ -414,6 +414,16 @@
               <FileType>1</FileType>
               <FilePath>.\src\timer_manager.c</FilePath>
             </File>
+            <File>
+              <FileName>arm_cortex_m.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\arm_cortex_m.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_ARMCM3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\system_ARMCM3.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -448,6 +458,21 @@
               <FileName>timer_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\include\timer_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cortex_m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\include\arm_cortex_m.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_ARMCM3.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\startup_ARMCM3.s</FilePath>
             </File>
           </Files>
         </Group>
