@@ -440,7 +440,18 @@ static tcb_t* scheduler_find_highest_priority_task(void)
     {
         if(ready_queues[i] != NULL)
         {
-            return ready_queues[i];
+            /* Check if this task is actually in READY state */
+            tcb_t* task = ready_queues[i];
+            tcb_t* first_task = task;
+            
+            /* Try to find a ready task in this priority level */
+            do {
+                if(task->state == TASK_STATE_READY)
+                {
+                    return task;
+                }
+                task = task->next;
+            } while(task != first_task && task != NULL);
         }
     }
     

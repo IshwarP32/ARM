@@ -10,6 +10,7 @@
 
 #include "task_manager.h"
 #include "memory_manager.h"
+#include "scheduler.h"
 
 /* ============================================================================
  * GLOBAL VARIABLES
@@ -112,6 +113,9 @@ uint8_t task_create(void (*task_function)(void),
     
     /* Update counters */
     task_count++;
+    
+    /* Add task to scheduler ready queue */
+    scheduler_add_ready_task(tcb);
     
     DEBUG_PRINT("Task '%s' created with ID %d, Priority %d\n", 
                 task_name, task_id, priority);
