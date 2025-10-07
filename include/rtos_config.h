@@ -114,10 +114,19 @@ typedef enum {
 #define DEBUG  1
 #endif
 
+/* Debug variables for watching execution (no printf needed) */
+extern volatile char debug_buffer[32];  /* Smaller buffer */
+extern volatile int debug_counter;
+extern void debug_log(int step, const char* message);
+
 #ifdef DEBUG
-    #define DEBUG_PRINT(fmt, ...)   printf(fmt, ##__VA_ARGS__)
+    #define DEBUG_LOG(step, msg)    debug_log(step, msg)
+    #define DEBUG_VAR(var)          debug_counter = (int)(var)
+    #define DEBUG_PRINT(...)        do { /* Disabled for simulator */ } while(0)
 #else
-    #define DEBUG_PRINT(fmt, ...)   
+    #define DEBUG_LOG(step, msg)
+    #define DEBUG_VAR(var)
+    #define DEBUG_PRINT(...)        do { } while(0)
 #endif
 
 /* ============================================================================
