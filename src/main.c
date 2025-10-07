@@ -73,76 +73,129 @@ int main(void)
     /* Start the RTOS scheduler */
     scheduler_start();
     
-    /* Should never reach here */
+    DEBUG_PRINT("[MAIN] Entering scheduler loop...\n");
+    DEBUG_PRINT("[MAIN] This is a SIMPLIFIED scheduler - tasks run one iteration at a time\n");
+    DEBUG_PRINT("[MAIN] Press stop to end the simulation\n\n");
+    
+    /* Main scheduler loop - simplified for beginners
+     * In a real RTOS, the scheduler would use timer interrupts and context switching.
+     * Here, we simply call each task in turn to demonstrate task execution.
+     * This allows all tasks to run without getting stuck in infinite loops. */
+    uint32_t iteration = 0;
     while(1)
     {
-        /* Emergency fallback */
+        iteration++;
+        
+        /* Update task delays (simulate timer tick) */
+        if(iteration % 10 == 0)  /* Update delays every 10 iterations */
+        {
+            task_update_delays();
+        }
+        
+        /* Run next ready task */
+        scheduler_run_next_task();
+        
+        /* Print status every 50 iterations to avoid overwhelming output */
+        if(iteration % 50 == 0)
+        {
+            DEBUG_PRINT("\n[MAIN] Scheduler iteration %d completed\n", iteration);
+            scheduler_print_info();
+            DEBUG_PRINT("\n");
+        }
+        
+        /* Small delay to make output readable in simulator */
+        for(volatile int i = 0; i < 10000; i++);
+        
+        /* Stop after a reasonable number of iterations for testing */
+        if(iteration >= 1000)
+        {
+            DEBUG_PRINT("\n[MAIN] Completed 1000 iterations - stopping for demonstration\n");
+            DEBUG_PRINT("[MAIN] In a real system, this would run indefinitely\n");
+            break;
+        }
     }
+    
+    DEBUG_PRINT("\n[MAIN] Program completed successfully!\n");
     
     return 0;
 }
 
 /**
  * @brief Example Task 1 - High Priority Producer Task
+ * @note Simplified version: executes one iteration per call
  */
 void task1_function(void)
 {
-    uint32_t counter = 0;
-    DEBUG_PRINT("[TASK1] High priority task started\n");
+    static uint32_t counter = 0;
+    static bool first_run = true;
     
-    while(1)
+    if(first_run)
     {
-        /* Simulate high priority work */
-        counter++;
-        DEBUG_PRINT("[TASK1] Running - Counter: %d\n", counter);
-        
-        /* Send data to queue */
-        queue_send(QUEUE_1, &counter, 10);
-        
-        /* Task delay */
+        DEBUG_PRINT("[TASK1] High priority task started\n");
+        first_run = false;
+    }
+    
+    /* Simulate high priority work */
+    counter++;
+    DEBUG_PRINT("[TASK1] Running - Counter: %d\n", counter);
+    
+    /* Send data to queue */
+    queue_send(QUEUE_1, &counter, 10);
+    
+    /* Note: In simplified version, task_delay() just marks task as blocked.
+     * The scheduler will skip blocked tasks for a number of iterations. */
+    if(counter % 5 == 0)  /* Simulate delay every 5 iterations */
+    {
         task_delay(100);
     }
 }
 
 /**
  * @brief Example Task 2 - Medium Priority Consumer Task
+ * @note Simplified version: executes one iteration per call
  */
 void task2_function(void)
 {
+    static bool first_run = true;
     uint32_t received_data;
-    DEBUG_PRINT("[TASK2] Medium priority task started\n");
     
-    while(1)
+    if(first_run)
     {
-        /* Wait for data from queue */
-        if(queue_receive(QUEUE_1, &received_data, 50) == QUEUE_SUCCESS)
-        {
-            DEBUG_PRINT("[TASK2] Received data: %d\n", received_data);
-            /* Process received data */
-            // Add your processing logic here
-        }
-        
-        /* Task delay */
-        task_delay(200);
+        DEBUG_PRINT("[TASK2] Medium priority task started\n");
+        first_run = false;
+    }
+    
+    /* Wait for data from queue */
+    if(queue_receive(QUEUE_1, &received_data, 50) == QUEUE_SUCCESS)
+    {
+        DEBUG_PRINT("[TASK2] Received data: %d\n", received_data);
+        /* Process received data */
+    }
+    else
+    {
+        DEBUG_PRINT("[TASK2] No data in queue\n");
     }
 }
 
 /**
  * @brief Example Task 3 - Low Priority Background Task
+ * @note Simplified version: executes one iteration per call
  */
 void task3_function(void)
 {
-    DEBUG_PRINT("[TASK3] Low priority background task started\n");
+    static bool first_run = true;
+    static uint32_t run_count = 0;
     
-    while(1)
+    if(first_run)
     {
-        DEBUG_PRINT("[TASK3] Background task running...\n");
-        /* Background processing */
-        // Add background tasks here
-        
-        /* Long delay for background task */
-        task_delay(1000);
+        DEBUG_PRINT("[TASK3] Low priority background task started\n");
+        first_run = false;
     }
+    
+    run_count++;
+    DEBUG_PRINT("[TASK3] Background task running (iteration %d)...\n", run_count);
+    
+    /* Background processing */
 }
 
 /**

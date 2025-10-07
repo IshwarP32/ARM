@@ -75,21 +75,17 @@ void scheduler_start(void)
         /* Set first task as running */
         task_set_state(first_task->task_id, TASK_STATE_RUNNING);
         
-        DEBUG_PRINT("First task: %s (ID: %d)\n", first_task->task_name, first_task->task_id);
-        
-        /* In a real implementation, this would perform the initial context switch */
-        /* For simulation, we'll call the task function directly */
-        if(first_task->task_function != NULL)
-        {
-            first_task->task_function();
-        }
+        DEBUG_PRINT("Scheduler started with first task: %s (ID: %d)\n", first_task->task_name, first_task->task_id);
     }
     else
     {
         DEBUG_PRINT("No tasks ready to run!\n");
-        /* Run idle task */
-        scheduler_idle_task();
     }
+    
+    /* NOTE: In this simplified implementation, we don't call task functions directly.
+     * Instead, the main loop will repeatedly call scheduler_run_next_task() to execute
+     * each task for one iteration. This allows all tasks to run without getting stuck
+     * in infinite loops. */
 }
 
 /**
@@ -371,17 +367,63 @@ void scheduler_print_info(void)
  */
 void scheduler_idle_task(void)
 {
-    while(1)
+    /* Idle processing - could include power management */
+    stats.idle_time_percentage++;
+    
+    /* In real system, could enter low power mode */
+    // __WFI(); /* Wait for interrupt */
+    
+    DEBUG_PRINT("[IDLE] Idle task running\n");
+}
+
+/**
+ * @brief Run the next ready task for one iteration
+ * @note This is a simplified scheduler that runs each task once per call
+ */
+void scheduler_run_next_task(void)
+{
+    if(!scheduler_running)
     {
-        /* Idle processing - could include power management */
-        stats.idle_time_percentage++;
-        
-        /* In real system, could enter low power mode */
-        // __WFI(); /* Wait for interrupt */
-        
-        /* Yield to allow other tasks to run */
-        scheduler_yield();
+        return;
     }
+    
+    /* Get next task to run */
+    tcb_t* next_task = scheduler_get_next_task();
+    
+    if(next_task == NULL)
+    {
+        /* No ready tasks, run idle */
+        scheduler_idle_task();
+        return;
+    }
+    
+    /* Check if task is blocked or suspended */
+    if(next_task->state == TASK_STATE_BLOCKED || next_task->state == TASK_STATE_SUSPENDED)
+    {
+        /* Skip this task */
+        return;
+    }
+    
+    /* Set task as running */
+    task_set_state(next_task->task_id, TASK_STATE_RUNNING);
+    
+    /* Execute the task function once */
+    if(next_task->task_function != NULL)
+    {
+        next_task->task_function();
+    }
+    
+    /* Set task back to ready (unless it was blocked/suspended by itself) */
+    if(next_task->state == TASK_STATE_RUNNING)
+    {
+        next_task->state = TASK_STATE_READY;
+    }
+    
+    /* Move to next task in round-robin */
+    scheduler_round_robin_next(next_task->priority);
+    
+    /* Update statistics */
+    stats.total_context_switches++;
 }
 
 /* ============================================================================

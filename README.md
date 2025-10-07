@@ -54,6 +54,16 @@ ARM_RTOS_Scheduler/
 
 ## 🚀 Getting Started
 
+### ⚠️ Important Note - Simplified Version
+
+This project uses a **simplified cooperative scheduling approach** to make it easier for beginners to understand. See [SIMPLIFIED_APPROACH.md](SIMPLIFIED_APPROACH.md) for detailed explanation.
+
+**Key differences from production RTOS:**
+- Tasks execute one iteration at a time (no infinite loops in task functions)
+- Cooperative scheduling using a main loop (not preemptive with interrupts)
+- Program completes after 1000 iterations (for demonstration)
+- Designed for learning, not production use
+
 ### Prerequisites
 
 1. **Keil uVision IDE** (free version)

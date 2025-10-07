@@ -129,4 +129,10 @@ void scheduler_print_info(void);
  */
 void scheduler_idle_task(void);
 
+/**
+ * @brief Run the next ready task for one iteration
+ * @note Simplified scheduler that executes one task iteration per call
+ */
+void scheduler_run_next_task(void);
+
 #endif /* SCHEDULER_H */
