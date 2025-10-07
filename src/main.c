@@ -1,11 +1,17 @@
 /**
  * @file main.c
- * @brief ARM RTOS Scheduler - Main Application Entry Point
+ * @brief ARM RTOS Scheduler - Main Application Entry Point (SIMPLIFIED VERSION)
  * @author Team Member 6 - System Integration
  * @date 2024
  * 
  * This file contains the main application entry point and system initialization.
  * Compatible with Keil uVision and ARM Cortex-M simulators.
+ * 
+ * SIMPLIFIED FOR BEGINNERS:
+ * This version uses cooperative scheduling without infinite loops in tasks.
+ * Tasks execute one iteration at a time and return control to the scheduler.
+ * This allows the program to run completely without getting stuck.
+ * See SIMPLIFIED_APPROACH.md for detailed explanation.
  */
 
 #include "rtos_config.h"
